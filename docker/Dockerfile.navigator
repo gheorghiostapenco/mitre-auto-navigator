@@ -1,0 +1,30 @@
+# STAGE 1: Build the Application
+FROM node:16-alpine AS builder
+
+WORKDIR /app
+
+# Install git
+RUN apk add --no-cache git
+
+# Clone the repo
+RUN git clone --branch v4.8.2 https://github.com/mitre-attack/attack-navigator.git .
+
+WORKDIR /app/nav-app
+
+# Install dependencies
+RUN npm install
+
+# Build the application
+RUN npm run build
+
+# --- DEBUG STEP ---
+# This will list the contents of the 'dist' folder to the build logs
+# So we can see exactly what subfolder was created.
+RUN ls -F dist/
+# ------------------
+
+# STAGE 2: Serve (Placeholder to allow build to proceed to the ls step)
+FROM nginx:alpine
+# We will fail here intentionally if we don't fix the path, 
+# but we need the logs from the previous step first.
+COPY --from=builder /app/nav-app/dist /usr/share/nginx/html

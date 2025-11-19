@@ -1,0 +1,47 @@
+[
+  {
+    "AssessmentStartTime": "2025-11-19T10:00:00",
+    "ServiceName": "cloudtrail",
+    "Status": "FAIL",
+    "CheckID": "cloudtrail_logs_encrypted",
+    "CheckTitle": "Ensure CloudTrail logs are encrypted at rest using KMS CMKs",
+    "Region": "us-east-1",
+    "ResourceId": "arn:aws:cloudtrail:us-east-1:123456789012:trail/management-events",
+    "Remediation": {
+      "Recommendation": {
+        "Text": "You should encrypt CloudTrail logs with KMS.",
+        "Url": "https://docs.aws.amazon.com/awscloudtrail/latest/userguide/encrypting-cloudtrail-log-files-with-aws-kms.html"
+      }
+    }
+  },
+  {
+    "AssessmentStartTime": "2025-11-19T10:00:05",
+    "ServiceName": "iam",
+    "Status": "FAIL",
+    "CheckID": "iam_root_access_key",
+    "CheckTitle": "Ensure the root account usage is avoided",
+    "Region": "global",
+    "ResourceId": "arn:aws:iam::123456789012:root",
+    "Remediation": {
+      "Recommendation": {
+        "Text": "Delete root access keys.",
+        "Url": "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_root-user.html"
+      }
+    }
+  },
+  {
+    "AssessmentStartTime": "2025-11-19T10:00:10",
+    "ServiceName": "s3",
+    "Status": "PASS",
+    "CheckID": "s3_bucket_public_access",
+    "CheckTitle": "Ensure S3 buckets do not allow public access",
+    "Region": "us-east-1",
+    "ResourceId": "arn:aws:s3:::my-secure-bucket",
+    "Remediation": {
+      "Recommendation": {
+        "Text": "Enable Block Public Access.",
+        "Url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/access-control-block-public-access.html"
+      }
+    }
+  }
+]

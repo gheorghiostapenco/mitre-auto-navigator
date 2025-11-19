@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.pyc
+.env
+env/
+venv/
+
+# Docker & IDE
+.docker/
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Project Artifacts (Do not commit these!)
+generated_layers/
+dist/
+prowler-output.json
+*.log

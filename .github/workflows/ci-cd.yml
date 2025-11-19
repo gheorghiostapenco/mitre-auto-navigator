@@ -1,0 +1,53 @@
+name: automated-security-map
+
+# Trigger: Run every night at midnight OR manually via button
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  security-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install Dependencies
+        run: |
+          pip install prowler
+          # Install any other python libs from your requirements.txt
+          # pip install -r app/requirements.txt
+
+      - name: 🔍 Run Security Scan (Simulation)
+        # In a real environment, you would run: prowler aws -M json -o prowler-report
+        # For this portfolio demo, we use our sample data to ensure the pipeline passes green.
+        run: |
+          echo "Simulating Prowler Scan..."
+          cp samples/prowler-sample.json prowler-output.json
+
+      - name: ⚙️ Map to MITRE ATT&CK
+        run: |
+          # We modify the script call slightly to accept arguments if we upgraded the script, 
+          # or we move the output file to the expected location.
+          python3 app/main.py
+          
+          # Move the generated file to a dist folder for upload
+          mkdir dist
+          mv generated_layers/prowler_layer.json dist/latest_layer.json
+
+      - name: 🚀 Deploy/Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: mitre-layer-json
+          path: dist/latest_layer.json
+          retention-days: 5
+
+      # OPTIONAL: In a real job, you would add a step here to copy the file to S3
+      # - name: Upload to S3
+      #   run: aws s3 cp dist/latest_layer.json s3://my-security-dashboard/layers/
