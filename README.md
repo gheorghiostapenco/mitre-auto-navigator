@@ -1,6 +1,9 @@
 ````markdown
 # Auto-Navigator: CI/CD-Driven Threat Coverage Mapper
 
+<img width="1817" height="845" alt="Screenshot from 2025-11-19 15-16-02" src="https://github.com/user-attachments/assets/dd1384e0-14cd-4a4a-bdfe-2b9b99b28f55" />
+
+
 ## Overview
 This project implements a DevSecOps pipeline that automates the visualization of security coverage. It integrates infrastructure scanning tools (Prowler) with the MITRE ATT&CK Navigator to provide a continuous, visual representation of the organization's security posture.
 
